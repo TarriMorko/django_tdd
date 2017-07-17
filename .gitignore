@@ -103,3 +103,4 @@ env_lists/
 db.sqlite3
 __pycache__
 .pyc
+.vscode/
