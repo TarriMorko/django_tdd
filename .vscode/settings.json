@@ -1,4 +1,6 @@
 // 將您的設定放入此檔案中以覆寫預設值和使用者設定。
 {
+    "python.pythonPath": "C:\\src\\django_tdd\\env_lists\\Scripts\\python.exe",
     "terminal.integrated.shell.windows": "C:\\WINDOWS\\Sysnative\\WindowsPowerShell\\v1.0\\powershell.exe",
+    "editor.minimap.enabled": false
 }
