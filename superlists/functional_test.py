@@ -11,7 +11,7 @@ class NewVisitorTest(unittest.TestCase): #➊
     def setUp(self): #➋
         self.binary = FirefoxBinary("C:\\Program Files (x86)\\Mozilla Firefox\\firefox.exe")
         self.browser = webdriver.Firefox(firefox_binary=self.binary)
-        # self.browser.implicitly_wait(3)
+        self.browser.implicitly_wait(1)
 
     def tearDown(self): #➌
         self.browser.quit()
@@ -43,7 +43,8 @@ class NewVisitorTest(unittest.TestCase): #➊
         table = self.browser.find_element_by_id('id_list_table')
         rows = table.find_elements_by_tag_name('tr')
         self.assertTrue(
-            any(row.text == '1: Buy peacock feathers' for row in rows)
+            any(row.text == '1: Buy peacock feathers' for row in rows),
+            "New to-do item did not appear in table"
         )
 
         # 页面中又显示了一个文本框，可以输入其他的待办事项
