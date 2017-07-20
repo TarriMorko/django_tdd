@@ -1,4 +1,5 @@
 import unittest
+import time
 from selenium import webdriver
 from selenium.webdriver.firefox.firefox_binary import FirefoxBinary
 from selenium.webdriver.common.keys import Keys # what is this?
@@ -11,7 +12,7 @@ class NewVisitorTest(unittest.TestCase): #➊
     def setUp(self): #➋
         self.binary = FirefoxBinary("C:\\Program Files (x86)\\Mozilla Firefox\\firefox.exe")
         self.browser = webdriver.Firefox(firefox_binary=self.binary)
-        self.browser.implicitly_wait(1)
+        self.browser.implicitly_wait(3)
 
     def tearDown(self): #➌
         self.browser.quit()
@@ -37,23 +38,36 @@ class NewVisitorTest(unittest.TestCase): #➊
         inputbox.send_keys('Buy peacock feathers')
 
         # 她按回车键后，页面更新了
-        # 待办事项表格中显示了“1: Buy peacock feathers”
         inputbox.send_keys(Keys.ENTER)
-
+        
+        # 待办事项表格中显示了“1: Buy peacock feathers”
         table = self.browser.find_element_by_id('id_list_table')
         rows = table.find_elements_by_tag_name('tr')
-        self.assertTrue(
-            any(row.text == '1: Buy peacock feathers' for row in rows),
-            "New to-do item did not appear in table"
-        )
+        print([row.text for row in rows])
+        time.sleep(5)
+        self.assertIn('1: Buy peacock feathers', [row.text for row in rows])
+
 
         # 页面中又显示了一个文本框，可以输入其他的待办事项
         # 她输入了“Use peacock feathers to make a fly”（使用孔雀羽毛做假蝇）
+        inputbox = self.browser.find_element_by_id('id_new_item')
+        inputbox.send_keys('Use peacock feathers to make a fly')
+        inputbox.send_keys(Keys.ENTER)
         # 伊迪丝做事很有条理
-        self.fail('Finish the test!')
 
         # 页面再次更新，她的清单中显示了这两个待办事项
+        table = self.browser.find_element_by_id('id_list_table')
+        rows = table.find_elements_by_tag_name('tr')
+        print([row.text for row in rows])
+        time.sleep(5)        
+        self.assertIn('1: Buy peacock feathers', [row.text for row in rows])
+        self.assertIn(
+        '2: Use peacock feathers to make a fly' ,
+        [row.text for row in rows]
+        )
 
+        self.fail('Finish the test!')
+        
         # 伊迪丝想知道这个网站是否会记住她的清单
 
         # 她看到网站为她生成了一个唯一的URL
