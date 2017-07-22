@@ -2,17 +2,14 @@ import unittest
 import time
 from selenium import webdriver
 from selenium.webdriver.firefox.firefox_binary import FirefoxBinary
-from selenium.webdriver.common.keys import Keys # what is this?
-
-
-
+from selenium.webdriver.common.keys import Keys
 
 
 class NewVisitorTest(unittest.TestCase): #➊
     def setUp(self): #➋
         self.binary = FirefoxBinary("C:\\Program Files (x86)\\Mozilla Firefox\\firefox.exe")
         self.browser = webdriver.Firefox(firefox_binary=self.binary)
-        self.browser.implicitly_wait(3)
+        self.browser.implicitly_wait(9)
 
     def tearDown(self): #➌
         self.browser.quit()
